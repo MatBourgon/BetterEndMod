@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "XXX",
+        "XXX",
+        "XXX"
+    ],
+    "key": {
+        "X": {
+            "item": "betterend:fluorite"
+        }
+    },
+    "result": {
+        "item": "betterend:fluorite_block",
+        "count": 1
+    }
+}
