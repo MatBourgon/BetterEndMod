@@ -31,3 +31,5 @@ bin/
 # fabric
 
 run/
+
+src/main/java/net/matt_with_a_hat/saves/
