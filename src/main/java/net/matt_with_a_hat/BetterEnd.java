@@ -89,6 +89,7 @@ public class BetterEnd implements ModInitializer {
         .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, .15)
         .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
         .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 26.0)
+        .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
         );
 
     }

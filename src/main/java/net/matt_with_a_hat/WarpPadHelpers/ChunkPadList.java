@@ -102,8 +102,6 @@ public class ChunkPadList
                 }
             }
         }
-        if (pad != null)
-            System.out.println("Chosen: " + pad.toString());
         return pad;
     }
 }
