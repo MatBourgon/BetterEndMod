@@ -13,8 +13,10 @@ import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
@@ -54,8 +56,8 @@ public class BetterEnd implements ModInitializer {
 
     public static EntityType<EntityChorusENT> CHORUS_ENT = Registry.register(
         Registry.ENTITY_TYPE,
-        new Identifier("betterend", "chorusent"),
-        FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EntityChorusENT::new).build()
+        new Identifier("betterend", "chorus_ent"),
+        FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EntityChorusENT::new).size(.9f, 1.60f).build()
     );
 
 
@@ -71,6 +73,7 @@ public class BetterEnd implements ModInitializer {
         Registry.register(Registry.ITEM, new Identifier("betterend", "warppad"), new BlockItem(blockWarpPad, new FabricItemSettings().group(ItemGroup.BUILDING_BLOCKS)));
         Registry.register(Registry.ITEM, new Identifier("betterend", "fluorite"), itemFluorite);
         Registry.register(Registry.ITEM, new Identifier("betterend", "vers_eye"), itemVersEye);
+        Registry.register(Registry.ITEM, new Identifier("betterend", "chorus_ent_egg"), new SpawnEggItem(CHORUS_ENT, 0x8b6db6, 0xf9d5f8, new FabricItemSettings().group(ItemGroup.MISC)));
         WARP_PAD_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "betterend:warppad", BlockEntityType.Builder.create(BlockWarpPadEntity::new, blockWarpPad).build(null));
 
         RegistryKey<ConfiguredFeature<?, ?>> fluoriteCrater = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN,
@@ -81,8 +84,7 @@ public class BetterEnd implements ModInitializer {
 
 
 
-
-        FabricDefaultAttributeRegistry.register(CHORUS_ENT, EntityChorusENT.createMobAttributes());
+        FabricDefaultAttributeRegistry.register(CHORUS_ENT, EntityChorusENT.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 30));
 
     }
 

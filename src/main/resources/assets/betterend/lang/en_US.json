@@ -3,5 +3,7 @@
     "block.betterend.fluorite_ore": "Fluorite Ore",
     "block.betterend.fluorite_block": "Fluorite Block",
     "block.betterend.warppad": "Warp Pad",
-    "item.betterend.vers_eye": "§dVers Eye§r"
+    "item.betterend.vers_eye": "§dVers Eye§r",
+    "item.betterend.chorus_ent_egg": "Chorus ENT Spawn Egg",
+    "entity.betterend.chorus_ent": "Chorus ENT"
 }

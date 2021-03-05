@@ -1,0 +1,86 @@
+{
+    "type": "minecraft:entity",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "min": 0,
+                                "max": 3,
+                                "type": "minecraft:uniform"
+                            }
+                        },
+                        {
+                            "function": "minecraft:looting_enchant",
+                            "count": {
+                                "min": 0,
+                                "max": 2
+                            }
+                        }
+                    ],
+                    "name": "minecraft:chorus_fruit"
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "betterend:vers_eye"
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:killed_by_player"
+                },
+                {
+                    "condition": "minecraft:random_chance_with_looting",
+                    "chance": 0.5,
+                    "looting_multiplier": 0.1333
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "functions": [
+                        {
+                            "function": "set_name",
+                            "name": "§6Pumpkin Pi§r"
+                        },
+                        {
+                            "function": "set_lore",
+                            "lore": [
+                                "Tastes even better on a rainy day!"
+                            ]
+                        }
+                    ],
+                    "name": "minecraft:pumpkin_pie"
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:killed_by_player"
+                },
+                {
+                    "condition": "minecraft:weather_check",
+                    "raining": true
+                },
+                {
+                    "condition": "minecraft:location_check",
+                    "predicate": {
+                        "dimension": "minecraft:overworld"
+                    }
+                }
+            ]
+        }
+    ]
+}
