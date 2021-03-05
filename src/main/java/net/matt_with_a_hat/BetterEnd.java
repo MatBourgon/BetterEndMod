@@ -57,7 +57,7 @@ public class BetterEnd implements ModInitializer {
     public static EntityType<EntityChorusENT> CHORUS_ENT = Registry.register(
         Registry.ENTITY_TYPE,
         new Identifier("betterend", "chorus_ent"),
-        FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EntityChorusENT::new).size(.9f, 1.60f).build()
+        FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EntityChorusENT::new).size(1.8f, 3.2f).build()
     );
 
 
@@ -84,7 +84,12 @@ public class BetterEnd implements ModInitializer {
 
 
 
-        FabricDefaultAttributeRegistry.register(CHORUS_ENT, EntityChorusENT.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 30));
+        FabricDefaultAttributeRegistry.register(CHORUS_ENT, EntityChorusENT.createHostileAttributes()
+        .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
+        .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, .15)
+        .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
+        .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 26.0)
+        );
 
     }
 

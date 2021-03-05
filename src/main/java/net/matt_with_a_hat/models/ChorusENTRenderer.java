@@ -11,14 +11,16 @@ public class ChorusENTRenderer extends GeoEntityRenderer<EntityChorusENT> {
     public ChorusENTRenderer(EntityRenderDispatcher renderManager)
     {
         super(renderManager, new ChorusENTModel());
-        this.shadowRadius = 0.1f;
+        this.shadowRadius = .8f;
     }
 
     @Override
     public void render(EntityChorusENT entity, float entityYaw, float partialTicks, MatrixStack stack, VertexConsumerProvider bufferIn, int packedLightIn)
     {
+        stack.push();
         stack.scale(2f, 2f, 2f);
         super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
+        stack.pop();
     }
 
 }
