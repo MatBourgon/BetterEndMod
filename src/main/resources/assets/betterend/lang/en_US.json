@@ -5,5 +5,17 @@
     "block.betterend.warppad": "Warp Pad",
     "item.betterend.vers_eye": "§dVers Eye§r",
     "item.betterend.chorus_ent_egg": "Chorus ENT Spawn Egg",
-    "entity.betterend.chorus_ent": "Chorus ENT"
+    "entity.betterend.chorus_ent": "Chorus ENT",
+    "effect.betterend.attraction": "Attraction",
+    "effect.betterend.long_attraction": "Attraction",
+    "effect.betterend.strong_attraction": "Attraction II",
+    "item.minecraft.potion.effect.attraction": "Potion of Attraction",
+    "item.minecraft.splash_potion.effect.attraction": "Splash Potion of Attraction",
+    "item.minecraft.lingering_potion.effect.attraction": "Lingering Potion of Attraction",
+    "item.minecraft.potion.effect.long_attraction": "Potion of Attraction",
+    "item.minecraft.splash_potion.effect.long_attraction": "Splash Potion of Attraction",
+    "item.minecraft.lingering_potion.effect.long_attraction": "Lingering Potion of Attraction",
+    "item.minecraft.potion.effect.strong_attraction": "Potion of Attraction II",
+    "item.minecraft.splash_potion.effect.strong_attraction": "Splash Potion of Attraction II",
+    "item.minecraft.lingering_potion.effect.strong_attraction": "Lingering Potion of Attraction II"
 }

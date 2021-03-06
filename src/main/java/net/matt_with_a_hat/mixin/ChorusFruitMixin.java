@@ -36,6 +36,9 @@ public abstract class ChorusFruitMixin extends Item {
             info.setReturnValue(super.finishUsing(stack, world, user));
 
             BlockPos startPos = BlockWarpPad.warpPadTree.getNearestBlock(user.getBlockPos(), world, user.getHeadYaw());
+            if (user instanceof PlayerEntity) {
+                ((PlayerEntity)user).getItemCooldownManager().set(this, 20);
+            }
             if (startPos != null)
             {
                 if (user.hasVehicle())
@@ -47,9 +50,6 @@ public abstract class ChorusFruitMixin extends Item {
                 user.playSound(soundEvent, 1.0F, 1.0F);
                 info.cancel();
                 return;
-            }
-            if (user instanceof PlayerEntity) {
-                ((PlayerEntity)user).getItemCooldownManager().set(this, 20);
             }
         }
     }

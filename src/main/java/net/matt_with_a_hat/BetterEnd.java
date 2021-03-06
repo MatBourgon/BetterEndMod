@@ -14,9 +14,12 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
@@ -33,6 +36,7 @@ import net.matt_with_a_hat.blocks.BlockFluoriteBlock;
 import net.matt_with_a_hat.blocks.BlockFluoriteOre;
 import net.matt_with_a_hat.blocks.BlockWarpPad;
 import net.matt_with_a_hat.blocks.BlockWarpPadEntity;
+import net.matt_with_a_hat.effects.StatusEffectAttraction;
 import net.matt_with_a_hat.entity.EntityChorusENT;
 import net.matt_with_a_hat.features.FluoriteCraterFeature;
 import net.minecraft.item.Item;
@@ -60,6 +64,11 @@ public class BetterEnd implements ModInitializer {
         FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, EntityChorusENT::new).size(1.8f, 3.2f).build()
     );
 
+
+    public static final StatusEffect statusEffectAttraction = new StatusEffectAttraction();
+    public static final Potion POTION_ATTRACTION = new Potion(new StatusEffectInstance[]{new StatusEffectInstance(statusEffectAttraction, 3600)});
+    public static final Potion POTION_ATTRACTION_STRONG = new Potion(new StatusEffectInstance[]{new StatusEffectInstance(statusEffectAttraction, 2400, 1)});
+    public static final Potion POTION_ATTRACTION_LONG = new Potion(new StatusEffectInstance[]{new StatusEffectInstance(statusEffectAttraction, 6000)});
 
     @Override
     public void onInitialize() {
@@ -91,6 +100,14 @@ public class BetterEnd implements ModInitializer {
         .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 26.0)
         .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0)
         );
+
+        Registry.register(Registry.STATUS_EFFECT, new Identifier("betterend", "attraction"), statusEffectAttraction);
+        Registry.register(Registry.POTION, new Identifier("betterend", "attraction"), POTION_ATTRACTION);
+        Registry.register(Registry.POTION, new Identifier("betterend", "long_attraction"), POTION_ATTRACTION_LONG);
+        Registry.register(Registry.POTION, new Identifier("betterend", "strong_attraction"), POTION_ATTRACTION_STRONG);
+
+        
+        //BrewingRecipeRegistry.Recipe(Potions.AWKWARD, Ingredient.ofItems(itemVersEye), POTION_ATTRACTION);
 
     }
 

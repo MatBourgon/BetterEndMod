@@ -72,6 +72,12 @@ public class EntityChorusENT extends HostileEntity implements IAnimatable {
         data.addAnimationController(new AnimationController<IAnimatable>(this, "controller", 0, this::predicate));
     }
 
+    @Override
+    public boolean hurtByWater()
+    {
+        return true;
+    }
+
 
     @Override
     protected void initGoals()
