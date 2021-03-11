@@ -2,6 +2,7 @@ package net.matt_with_a_hat.entity;
 
 import java.util.EnumSet;
 
+
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
@@ -35,12 +36,33 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class EntityChorusENT extends HostileEntity implements IAnimatable {
     
     private AnimationFactory factory = new AnimationFactory(this);
-
+    public boolean isMenacing = false;
+    
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event)
     {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ChorusENT.new", true));
         this.ignoreCameraFrustum = true;
+        if (isMenacing)
+            return standingpredicate(event);
+        if (event.isMoving())
+            return walkingpredicate(event);
+        return idlepredicate(event);
+    }
+
+    private <E extends IAnimatable> PlayState walkingpredicate(AnimationEvent<E> event)
+    {
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ChorusENT.walk", true));
         return PlayState.CONTINUE;
+    }
+
+    private <E extends IAnimatable> PlayState standingpredicate(AnimationEvent<E> event)
+    {
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ChorusENT.menace", true));
+        return PlayState.CONTINUE;
+    }
+
+    private <E extends IAnimatable> PlayState idlepredicate(AnimationEvent<E> event)
+    {
+        return PlayState.STOP;
     }
 
     @Override
@@ -52,7 +74,6 @@ public class EntityChorusENT extends HostileEntity implements IAnimatable {
     public EntityChorusENT(EntityType<? extends EntityChorusENT> type, World world)
     {
         super(type, world);
-        //this.stepHeight = 1f;
     }
 
     @Override
@@ -69,7 +90,7 @@ public class EntityChorusENT extends HostileEntity implements IAnimatable {
     @Override
     public void registerControllers(AnimationData data)
     {
-        data.addAnimationController(new AnimationController<IAnimatable>(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController<IAnimatable>(this, "controller", 20, this::predicate));
     }
 
     @Override
@@ -103,6 +124,12 @@ public class EntityChorusENT extends HostileEntity implements IAnimatable {
     @Override
     public void pushAwayFrom(Entity entity) {
         return;
+     }
+
+     @Override
+     public void tick()
+     {
+        super.tick();
      }
 
     class PullEntityCloserGoal extends Goal
@@ -153,6 +180,19 @@ public class EntityChorusENT extends HostileEntity implements IAnimatable {
         {
             this.mob.setTarget(targetEntity);
             attractionTimeLeft = (int)((random.nextFloat() * 3f + 2f) * 20f);
+            PacketByteBuf buf = PacketByteBufs.create();
+            buf.writeInt(this.mob.getEntityId());
+            buf.writeBoolean(true);
+            ServerPlayNetworking.send((ServerPlayerEntity)getTarget(), new Identifier("betterend", "ces"), buf);
+        }
+
+        @Override
+        public void stop()
+        {
+            PacketByteBuf buf = PacketByteBufs.create();
+            buf.writeInt(this.mob.getEntityId());
+            buf.writeBoolean(false);
+            ServerPlayNetworking.send((ServerPlayerEntity)targetEntity, new Identifier("betterend", "ces"), buf);
         }
 
         @Override

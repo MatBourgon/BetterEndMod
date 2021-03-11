@@ -154,7 +154,7 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
         if (random.nextFloat() < 0.3f)
         {
             //Crater generator
-            world.setBlockState(pos, Blocks.GLOWSTONE.getDefaultState(), 0);
+            //world.setBlockState(pos, Blocks.GLOWSTONE.getDefaultState(), 0);
             GenerateOre(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, (radiusY * radiusY)/2);
             CarveSphere(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, 3, radiusY-2, 3);
             while(CleanupFloaties(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, 3, radiusY-2, 3, false));
@@ -162,7 +162,7 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
         else
         {
             //Cluster generator
-            world.setBlockState(pos, Blocks.SEA_LANTERN.getDefaultState(), 0);
+            //world.setBlockState(pos, Blocks.SEA_LANTERN.getDefaultState(), 0);
             yOffset -= random.nextInt(3);
             GenerateOre(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, radiusY);
             while(CleanupFloaties(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, 3, radiusY-2, 3, true));
