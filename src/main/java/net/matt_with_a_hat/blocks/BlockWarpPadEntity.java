@@ -18,6 +18,8 @@ public class BlockWarpPadEntity extends BlockEntity {
     public void fromTag(BlockState state, CompoundTag tag)
     {
         super.fromTag(state, tag);
+
+        //This is to add the block to the tree at load.
         BlockWarpPad.warpPadTree.addBlockToChunk(pos.getX()/16, pos.getZ()/16, pos);
     }
 }

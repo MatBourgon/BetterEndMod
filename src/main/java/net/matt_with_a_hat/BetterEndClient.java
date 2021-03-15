@@ -15,23 +15,40 @@ public class BetterEndClient implements ClientModInitializer {
     @Override
     public void onInitializeClient()
     {
+        //Register entity renderer
         EntityRendererRegistry.INSTANCE.register(BetterEnd.CHORUS_ENT, (entityRenderDispatcher, context) -> new ChorusENTRenderer(entityRenderDispatcher));
         
+        ///Handle network packets
+
+        //Player velocity packet from chorus ent pulling
         ClientPlayNetworking.registerGlobalReceiver(new Identifier("betterend", "plyvel"), (client, handler, buf, sender) -> {
+
+            //Get velocity from packet
             Vec3d vel = new Vec3d(buf.readFloat(), buf.readFloat(), buf.readFloat());
+
             client.execute(() -> {
+                //Apply velocity
                 client.player.addVelocity(vel.x * 0.1f, vel.y * 0.1f, vel.z * 0.1f);
             });
         });
         
+        //Chorus entity state packet
         ClientPlayNetworking.registerGlobalReceiver(new Identifier("betterend", "ces"), (client, handler, buf, sender) -> {
+            
+            //Entity ID
             int entID = buf.readInt();
+            
+            //State
             boolean newstate = buf.readBoolean();
+
             client.execute(() -> {
+                //Find entity by id
                 for(Entity ent : client.world.getEntities())
                 {
                     if (ent.getEntityId() != entID)
                         continue;
+                        
+                    //Update menacing state
                     ((EntityChorusENT)ent).isMenacing = newstate;
                     break;
                 }

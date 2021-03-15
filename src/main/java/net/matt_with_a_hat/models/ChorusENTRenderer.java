@@ -9,6 +9,7 @@ import software.bernie.geckolib3.renderer.geo.GeoEntityRenderer;
 
 public class ChorusENTRenderer extends GeoEntityRenderer<EntityChorusENT> {
     
+    //Last position to make shaking not as jarring
     double lastX, lastY, lastZ;
 
     public ChorusENTRenderer(EntityRenderDispatcher renderManager)
@@ -23,10 +24,17 @@ public class ChorusENTRenderer extends GeoEntityRenderer<EntityChorusENT> {
     @Override
     public void render(EntityChorusENT entity, float entityYaw, float partialTicks, MatrixStack stack, VertexConsumerProvider bufferIn, int packedLightIn)
     {
+        //Push to the stack and pop at the end, or else scaling the mob scales the bounding box without scaling the actual hit box.
         stack.push();
+
+        //Increase scale
         stack.scale(2f, 2f, 2f);
+
+        //Shaking if shaking and not paused
         if (entity.isMenacing && !MinecraftClient.getInstance().isPaused())
         {
+
+            //Apply shaking
             double newX, newY, newZ;
             newX = Math.max(Math.min(((Math.random() - 0.5) / 25.0 + lastX) / 2.0, 0.025), -0.025);
             newY = Math.max(Math.min(((Math.random() - 0.5) / 25.0 + lastY) / 2.0, 0.025), -0.025);
@@ -36,6 +44,7 @@ public class ChorusENTRenderer extends GeoEntityRenderer<EntityChorusENT> {
             lastZ = newZ;
             stack.translate(newX, newY, newZ);
         }
+        //Render
         super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
         stack.pop();
     }

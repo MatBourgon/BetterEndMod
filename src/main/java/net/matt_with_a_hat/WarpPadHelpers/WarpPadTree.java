@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 
 public class WarpPadTree
 {
-    //List<ChunkPadList> chunks;
     Map<Long, ChunkPadList> chunks;
 
     public WarpPadTree()
@@ -20,6 +19,7 @@ public class WarpPadTree
 
     long chunkToLong(int chunkX, int chunkZ)
     {
+        //The key to the chunk map is the chunk's X and Z position merged into a 64 bit long from two 32 bit ints.
         return ((long)chunkX << 32) | chunkZ;
     }
 

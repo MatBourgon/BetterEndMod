@@ -32,6 +32,7 @@ public class StatusEffectAttraction extends StatusEffect {
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         List<? extends Entity> items = entity.world.getEntitiesByType(null, entity.getBoundingBox().expand(3f + amplifier * 2f, 1f + amplifier * 1f, 3f + amplifier * 2f), this::isValidEntity);
 
+        //For all xp and items, add velocity towards player 
         for(Entity ent : items)
         {
             Vec3d vel = entity.getPos().subtract(ent.getPos()).normalize();

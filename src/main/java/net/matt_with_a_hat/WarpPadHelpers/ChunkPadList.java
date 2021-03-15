@@ -45,19 +45,24 @@ public class ChunkPadList
     @Nullable
     private BlockPos findNearestBlockFromPosition(BlockPos ignore, World world, Vec3d pos)
     {
+        //Find nearest block by looking direction
         BlockPos pad = null;
-        double dist = 9999.0;
+        double dist = 9999.0; //Max distance, we only check 16x256x16, so we shouldn't really hit it.
         for(BlockPos warp : warps)
         {
+            //Ignore if start block
             if (warp.getX() == ignore.getX() && warp.getY() == ignore.getY() && warp.getZ() == ignore.getZ())
                 continue;
+            //Ignore if not air above block
             if (world.getBlockState(warp.add(0, 1, 0)) != Blocks.AIR.getDefaultState())
                 continue;
 
+            //Compare squared distance
             Vec3d _warp = new Vec3d(warp.getX(), warp.getY(), warp.getZ());
             double newDist = pos.squaredDistanceTo(_warp);
             if (newDist < dist)
             {
+                //Update pad and distance if new dist is smaller
                 pad = warp;
                 dist = newDist;
             }
@@ -69,20 +74,25 @@ public class ChunkPadList
     public BlockPos findNearestBlock(BlockPos pos, World world, float lookingYaw)
     {
         BlockPos pad = null;
-        //int lastManhattan = 9999;
+        //loop through warps to find nearest warp to blockpos
         for(BlockPos warp : warps)
         {
+            //Ignore if same block
             if (warp.getX() == pos.getX() && warp.getY() == pos.getY() && warp.getZ() == pos.getZ())
                 continue;
                 
+            //Ignore if no air above
             if (world.getBlockState(warp.add(0, 1, 0)) != Blocks.AIR.getDefaultState())
                 continue;
 
+            //Immediately accept if no pad found
             if (pad == null)
             {
                 pad = warp;
                 continue;
             }
+
+            //In manhattan distance is smaller, set as new pad. Manhattan distance is only addition by block count.
             int manhattanA, manhattanB;
             manhattanA = warp.getManhattanDistance(pos);
             manhattanB = pad.getManhattanDistance(pos);
@@ -90,16 +100,11 @@ public class ChunkPadList
                 pad = warp;
             else if (manhattanA == manhattanB)
             {
-                //if (manhattanA < lastManhattan)
-                {
-                    Vec3d forward = new Vec3d((double)pos.getX() - Math.sin(lookingYaw / 180.0 * Math.PI), pos.getY(), (double)pos.getZ() + Math.cos(lookingYaw/ 180.0 * Math.PI));
-                    BlockPos nearestInFront = findNearestBlockFromPosition(pos, world, forward);
-                    if (nearestInFront != null)
-                    {
-                        //lastManhattan = manhattanA;
-                        pad = nearestInFront;
-                    }
-                }
+                //If the current block is the same distance as the new position, select by yaw.
+                Vec3d forward = new Vec3d((double)pos.getX() - Math.sin(lookingYaw / 180.0 * Math.PI), pos.getY(), (double)pos.getZ() + Math.cos(lookingYaw/ 180.0 * Math.PI));
+                BlockPos nearestInFront = findNearestBlockFromPosition(pos, world, forward);
+                if (nearestInFront != null)
+                    pad = nearestInFront;
             }
         }
         return pad;

@@ -3,7 +3,7 @@
     "minVersion": 0.8,
     "package": "net.matt_with_a_hat.mixin",
     "compatibilityLevel": "JAVA_8",
-    "mixins": ["ChorusFruitMixin","BrewingRecipeRegistryMixin"],
+    "mixins": ["ChorusFruitMixin","BrewingRecipeRegistryMixin", "DefaultBiomeFeaturesMixin"],
     "client": [],
     "server": [],
     "injectors": {

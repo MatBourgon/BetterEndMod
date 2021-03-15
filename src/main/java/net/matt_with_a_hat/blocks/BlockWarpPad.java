@@ -42,14 +42,14 @@ public class BlockWarpPad extends Block implements BlockEntityProvider {
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify)
     {
         super.onBlockAdded(state, world, pos, oldState, notify);
-        warpPadTree.addBlockToChunk(pos.getX()/16, pos.getZ()/16, pos);
+        warpPadTree.addBlockToChunk(pos.getX()/16, pos.getZ()/16, pos); //Add to list
     }
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         super.onStateReplaced(state, world, pos, newState, moved);
         if (this.hasBlockEntity() && !state.isOf(newState.getBlock())) {
-           warpPadTree.removeBlockFromChunk(pos.getX()/16, pos.getZ()/16, pos);
+           warpPadTree.removeBlockFromChunk(pos.getX()/16, pos.getZ()/16, pos); //if destroyed, from from list
         }
   
     }

@@ -16,6 +16,8 @@ import net.minecraft.recipe.BrewingRecipeRegistry;
 @Mixin(BrewingRecipeRegistry.class)
 public class BrewingRecipeRegistryMixin {
     
+    //Purpose of mixin: Adding attraction potion to list of potion effects
+
     @Inject(at=@At("TAIL"), method="registerDefaults()V")
     private static void registerDefaults(CallbackInfo info)
     {

@@ -202,6 +202,7 @@ public class EntityChorusENT extends HostileEntity implements IAnimatable {
             if (getTarget() != null)
             {
                 Vec3d dirEntityToThis = (this.mob.getPos().subtract(getTarget().getPos())).normalize();
+                //For some reason, client doesn't get updated. Probably due to this being a server function. So we have to send a packet to the player.
                 PacketByteBuf buf = PacketByteBufs.create();
                 buf.writeFloat((float)dirEntityToThis.x);
                 buf.writeFloat((float)dirEntityToThis.y);
