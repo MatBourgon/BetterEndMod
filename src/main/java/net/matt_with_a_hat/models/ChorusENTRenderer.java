@@ -46,6 +46,8 @@ public class ChorusENTRenderer extends GeoEntityRenderer<EntityChorusENT> {
         }
         //Render
         super.render(entity, entityYaw, partialTicks, stack, bufferIn, packedLightIn);
+
+        //Pop the stack
         stack.pop();
     }
 

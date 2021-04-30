@@ -21,6 +21,7 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
         super(configFactory);
     }
 
+    //Carve a sphere into the world
     void CarveSphere(StructureWorldAccess world, BlockPos pos, Random random, int radiusX, int radiusY, int radiusZ)
     {
         for(int x = -radiusX; x < radiusX; ++x)
@@ -36,27 +37,14 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
                     if ((ix * ix + iy * iy + iz * iz) < .6f)
                     {
                         BlockPos checkPos = pos.add(x, y, z);
-                       // if (world.getBlockState(checkPos) == BetterEnd.blockFluoriteOre.getDefaultState())
-                       // {
-                        //    if (random.nextFloat() > 0.1f)
-                       //         world.setBlockState(checkPos, Blocks.AIR.getDefaultState(), 0);
-                       // } else if (world.getBlockState(checkPos) == Blocks.END_STONE.getDefaultState())
-                       // {
-                            //if (y > -(radiusY-1))
-                            //{
-                               // if (random.nextFloat() > (0.3f - Math.abs(radiusY + y) / radiusY))
-                                    
-                                    world.setBlockState(checkPos, Blocks.AIR.getDefaultState(), 0);
-                            //}   
-                            //else
-                           //     world.setBlockState(checkPos, Blocks.AIR.getDefaultState(), 0);
-                       // }
+                        world.setBlockState(checkPos, Blocks.AIR.getDefaultState(), 0);
                     }
                 }
             }
         }
     }
 
+    //Place ore. if the ore would be exposed, don't create it.
     void GenerateOre(StructureWorldAccess world, BlockPos pos, Random random, int stepsLeft)
     {
         if (!IsExposed(world, pos))
@@ -77,6 +65,7 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
         GenerateOre(world, pos.add(0, 0, 1), random, stepsLeft-1);
     }
 
+    //Check if a given coordinate is exposed to air
     boolean IsExposed(StructureWorldAccess world, BlockPos pos)
     {
         if (world.getBlockState(pos.add(0, 1, 0)) == Blocks.AIR.getDefaultState())
@@ -94,6 +83,7 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
         return false;
     }
 
+    //Check if a given coordinate is completely exposed to air
     boolean IsFloating(StructureWorldAccess world, BlockPos pos)
     {
         if (world.getBlockState(pos.add(0, 1, 0)) != Blocks.AIR.getDefaultState())
@@ -111,6 +101,7 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
         return true;
     }
 
+    //If there are any floating pieces, either convert it to endstone or air. Return true if we had to convert anything
     boolean CleanupFloaties(StructureWorldAccess world, BlockPos pos, Random random, int radiusX, int radiusY, int radiusZ, boolean forceEndstone)
     {
         boolean fixedAnyFloaties = false;
@@ -137,6 +128,7 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
         return fixedAnyFloaties;
     }
 
+    //Generate ore craters and clusters
     @Override
     public boolean generate(StructureWorldAccess world, ChunkGenerator generator, Random random, BlockPos pos, DefaultFeatureConfig config)
     {
@@ -154,7 +146,6 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
         if (random.nextFloat() < 0.3f)
         {
             //Crater generator
-            //world.setBlockState(pos, Blocks.GLOWSTONE.getDefaultState(), 0);
             GenerateOre(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, (radiusY * radiusY)/2);
             CarveSphere(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, 3, radiusY-2, 3);
             while(CleanupFloaties(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, 3, radiusY-2, 3, false));
@@ -162,7 +153,6 @@ public class FluoriteCraterFeature extends Feature<DefaultFeatureConfig>
         else
         {
             //Cluster generator
-            //world.setBlockState(pos, Blocks.SEA_LANTERN.getDefaultState(), 0);
             yOffset -= random.nextInt(3);
             GenerateOre(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, radiusY);
             while(CleanupFloaties(world, pos.add(8 + xOffset, yOffset, 8 + zOffset), random, 3, radiusY-2, 3, true));
